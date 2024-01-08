@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{commande.list.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="flex flex-wrap mb-6">
+                <h1 class="grow text-3xl md:text-4xl font-medium mb-2">[[#{commande.list.headline}]]</h1>
+                <div>
+                    <a th:href="@{/commandes/add}" class="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2">[[#{commande.list.createNew}]]</a>
+                </div>
+            </div>
+            <div th:if="${commandes.empty}">[[#{commande.list.empty}]]</div>
+            <div th:if="${!commandes.empty}" class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-left p-2">[[#{commande.id.label}]]</th>
+                            <th scope="col" class="text-left p-2">[[#{commande.date.label}]]</th>
+                            <th scope="col" class="text-left p-2">[[#{commande.prix.label}]]</th>
+                            <th scope="col" class="text-left p-2">[[#{commande.livraison.label}]]</th>
+                            <th scope="col" class="text-left p-2">[[#{commande.addressLivraison.label}]]</th>
+                            <th scope="col" class="text-left p-2">[[#{commande.statue.label}]]</th>
+                            <th scope="col" class="text-left p-2">[[#{commande.pharmacie.label}]]</th>
+                            <th scope="col" class="text-left p-2">[[#{commande.ordonance.label}]]</th>
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody class="border-t-2 border-black">
+                        <tr th:each="commande : ${commandes}" class="odd:bg-gray-100">
+                            <td class="p-2">[[${commande.id}]]</td>
+                            <td class="p-2">[[${commande.date}]]</td>
+                            <td class="p-2">[[${commande.prix}]]</td>
+                            <td class="p-2">[[${commande.livraison}]]</td>
+                            <td class="p-2">[[${commande.addressLivraison}]]</td>
+                            <td class="p-2">[[${commande.statue}]]</td>
+                            <td class="p-2">[[${commande.pharmacie}]]</td>
+                            <td class="p-2">[[${commande.ordonance}]]</td>
+                            <td class="p-2">
+                                <div class="float-right whitespace-nowrap">
+                                    <a th:href="@{/commandes/edit/{id}(id=${commande.id})}" class="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">[[#{commande.list.edit}]]</a>
+                                    <form th:action="@{/commandes/delete/{id}(id=${commande.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm inline">
+                                        <button type="submit" class="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">[[#{commande.list.delete}]]</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
