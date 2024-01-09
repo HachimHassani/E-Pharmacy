@@ -1,0 +1,48 @@
+@property --main-color {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #0085FF;
+}
+
+@property --main-darker-color {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #0047c1;
+}
+
+@property --stroke-color {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #8493a8;
+}
+
+@property --black-color {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #000000;
+}
+
+@property --white-color {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #FFFFFF;
+}
+
+@property --secondary-bg-color {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #d7dfef;
+}
+
+@property --error-color {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #F10E00;
+}
+
+@property --shadow-color {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: rgba(0, 0, 0, 0.094)
+}
+

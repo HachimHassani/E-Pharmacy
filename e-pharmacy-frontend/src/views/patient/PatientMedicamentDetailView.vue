@@ -1,0 +1,136 @@
+<script setup>
+    import AddToCartButton from '@/components/AddToCartButton.vue';
+    import PageContainer from '@/components/PageContainer.vue';
+</script>
+
+<template>
+    <PageContainer class="page-container">
+        <img src="@/assets/placeholders/pomade-jaune.png"/>
+
+        <div class="medicament-detail">
+            <h1> Aureomycine </h1>
+
+            <h2> Pommade ophtalmique 5g </h2>
+
+            <div class="line-separation"/>
+
+            <div class="description">
+                Aureomycin 1% – Pommade ophtalmique 5 g
+                <br/> <br/> 
+                Traitement des infections au niveau de l’œil et de ses muqueuses
+            </div>
+
+            <div class="line-separation"/>
+
+            <div class="price">
+                9,99 MAD
+            </div>
+
+            <div class="state">
+                <img src="@/assets/icons/ok.svg"/>
+                En Stock
+            </div>
+
+            <div class="add-container">
+                <input type="number" min="1" max="9999" value="1"/>
+                <AddToCartButton style="flex: auto;"/>
+            </div>
+        </div>
+
+    </PageContainer>
+</template>
+
+<style scoped>
+    .page-container img {
+        transform: rotate(8deg);
+        width: 80%;
+        max-width: 600px;
+    }
+
+    .medicament-detail {
+        width: calc(98% - 6vh);
+        display: flex;
+        flex-direction: column;
+
+        margin-top: 1vh;
+        padding: 2vh;
+
+        background-color: var(--secondary-bg-color);
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+
+        gap: 2vh;
+
+        padding: 3vh;
+    }
+
+    h1 {
+        font-size: calc(3.5vh + 0.2vw);
+        font-weight: 900;
+        margin: 0;
+    }
+
+    h2 {
+        font-size: calc(3.2vh + 0.2vw);
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .description {
+        font-size: calc(2.2vh + 0.1vw);
+        font-weight: 500;
+        margin-bottom: 64px;
+    }
+
+    .price {
+        text-align: end;
+
+        font-size: calc(2.6vh + 0.4vw);
+        font-weight: 700;
+        margin: 0;
+    }
+
+    /** state */
+
+    .state {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: #0084ff41;
+        color: var(--main-color);
+
+        padding: 1vh;
+        border-radius: 1vh;
+
+        font-size: 2.5vh;
+        font-weight: 700;
+
+        height: 36px;
+
+        gap: calc(1vw + 1vh);
+    }
+
+    .state img {
+        width: 4vh;
+    }
+
+    /** buy container */
+    .add-container {
+        width: 100%;
+        height: 64px;
+        padding: 0px;
+
+        display: flex;
+        gap: calc(1vw +  1vh);
+    }
+
+    .add-container input {
+        font-size: 2.5vh;
+        font-weight: 700;
+
+        padding: 0.6vh;
+        padding-left: calc(0.5vw + 1vh);
+    }
+
+</style>
