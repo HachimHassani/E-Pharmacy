@@ -41,6 +41,8 @@
 </template>
 
 <style scoped>
+
+
     .page-container img {
         transform: rotate(8deg);
         width: 80%;
@@ -65,19 +67,19 @@
     }
 
     h1 {
-        font-size: calc(3.5vh + 0.2vw);
+        font-size: calc(3.3vh + 0.2vw);
         font-weight: 900;
         margin: 0;
     }
 
     h2 {
-        font-size: calc(3.2vh + 0.2vw);
+        font-size: calc(3.1vh + 0.2vw);
         font-weight: 700;
         margin: 0;
     }
 
     .description {
-        font-size: calc(2.2vh + 0.1vw);
+        font-size: calc(2.0vh + 0.1vw);
         font-weight: 500;
         margin-bottom: 64px;
     }
@@ -85,7 +87,7 @@
     .price {
         text-align: end;
 
-        font-size: calc(2.6vh + 0.4vw);
+        font-size: calc(2.6vh + 0.3vw);
         font-weight: 700;
         margin: 0;
     }

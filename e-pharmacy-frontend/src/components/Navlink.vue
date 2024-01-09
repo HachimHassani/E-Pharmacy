@@ -5,10 +5,12 @@ import { RouterLink } from 'vue-router';
 
 <template>
     <RouterLink class="router-link" :to="href">
-        <img :src="imgPath" :width="`${responsiveIconSize}px`" />
-        <div v-if="isBig" class="route-name">
+        <img :src="imgPath" :width="`${responsiveIconSize}px`" draggable="false" />
+        <div v-if="isBig"
+        class="route-name">
             <slot></slot>
         </div>
+
     </RouterLink>
 </template>
 
@@ -29,7 +31,7 @@ import { RouterLink } from 'vue-router';
             },
             iconSize: {
                 type: Number,
-                default: 42
+                default: 32
             }
         },
         computed: {
@@ -39,7 +41,7 @@ import { RouterLink } from 'vue-router';
             },
             responsiveIconSize() {
                 const isMobile = this.$globalProperties.screenType == ScreenTypes.Mobile;
-                return isMobile? parseInt(this.iconSize) * 0.8: this.iconSize;
+                return isMobile? parseInt(this.iconSize): this.iconSize;
             }
         }
     }
@@ -61,8 +63,12 @@ import { RouterLink } from 'vue-router';
         gap: 8px;
     }
 
+    .router-link img {
+        user-select: none;
+    }
+
     .route-name {
-        font-size: x-large;
+        font-size: large;
         font-weight: 700;
     }
 </style>

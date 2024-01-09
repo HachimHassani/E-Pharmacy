@@ -2,23 +2,26 @@
     import ScreenTypes from '@/scripts/ScreenTypes';
 import CompanyIcon from './CompanyIcon.vue';
     import Navlink from './Navlink.vue';
+import UserMenu from './UserMenu.vue';
 </script>
 
 <template>
-    <nav>
+    <nav :class="{
+        'navbar-scrolled': scrolled
+    }">
         <CompanyIcon :hideText="hideCompanyText"></CompanyIcon>
 
         <div class="navbar-buttons">
 
             <Navlink iconPath="../assets/icons/home.svg" :isBig="isNavlinkBig" to="/patient"> Acceuil </Navlink>
 
-            <Navlink iconPath="../assets/icons/meds.svg" :isBig="isNavlinkBig" iconSize="40" to="/patient/medicaments"> Medicaments </Navlink>
+            <Navlink iconPath="../assets/icons/meds.svg" :isBig="isNavlinkBig" iconSize="30" to="/patient/medicaments"> Medicaments </Navlink>
 
             <Navlink iconPath="../assets/icons/notifs.svg" :isBig="isNavlinkBig" to="/patient/ordonnances"> Ordonnances </Navlink>
 
-            <Navlink iconPath="../assets/icons/cart.svg" :isBig="isNavlinkBig" iconSize="60" to="/patient/panier" ></Navlink>
+            <Navlink isBig="false" iconPath="../assets/icons/cart.svg" :isBig="isNavlinkBig" iconSize="38" to="/patient/panier" ></Navlink>
 
-            <Navlink iconPath="../assets/icons/profil.svg" :isBig="isNavlinkBig" iconSize="64" to="/" ></Navlink>
+            <UserMenu />
        
         </div>
     </nav>
@@ -27,6 +30,18 @@ import CompanyIcon from './CompanyIcon.vue';
 
 <script>
     export default {
+        data() {
+            return {
+                scrolled: false,
+            }
+        },
+
+        mounted() {
+            window.addEventListener('scroll', () => {
+                this.scrolled = window.scrollY > 10;
+            });
+        },
+
         computed: {
             isNavlinkBig() {
                 return this.$globalProperties.screenType == ScreenTypes.Desktop;
@@ -42,7 +57,6 @@ import CompanyIcon from './CompanyIcon.vue';
 <style scoped>
     @import "../assets/styles/colors.css";
 
-
     nav {
         position: fixed;
         left: 0px;
@@ -54,6 +68,12 @@ import CompanyIcon from './CompanyIcon.vue';
         background: white;
         z-index: 1000;
 
+        box-shadow: 0px 4px 16px 1px transparent;
+    
+        transition: all 0.8s;
+    }
+
+    .navbar-scrolled {
         box-shadow: 0px 4px 16px 1px var(--shadow-color);
     }
 
@@ -62,6 +82,6 @@ import CompanyIcon from './CompanyIcon.vue';
         display: flex;
         align-items: center;
         justify-content: end;
-        gap: 2.5%;
+        gap: 2.2%;
     }
 </style>

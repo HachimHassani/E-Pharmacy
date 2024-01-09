@@ -45,7 +45,8 @@ import { RouterLink } from 'vue-router';
         background-color: white;
         padding: calc(1.3vh + 0.5vw);
         border-radius: 1vh;
-        margin: 1.5vh;
+        margin: 3.5vh;  
+        margin-top: 6vh;
 
         display: flex;
         flex-direction: column;

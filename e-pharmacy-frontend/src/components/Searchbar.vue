@@ -17,8 +17,6 @@
 
 <style scoped>
     .searchbar-container {
-        height: 64px;
-
         margin: 0px;
         margin-top: 64px;
         margin-bottom: 64px;
@@ -53,6 +51,7 @@
 
     .search-input::placeholder {
         font-weight: 600;
+        font-size: 20px;
         color: var(--stroke-color);
     }
 
@@ -61,7 +60,8 @@
     }
 
     .search-submit {
-        font-size: 24px;
+        padding: 1.3vmin;
+        font-size: 20px;
         flex: 0.2;
     }
 
@@ -79,7 +79,6 @@
         flex: none;
         padding-left: 50px;
         background-size: 40px;
-        font-size: large;
         
         height: 52px;
     }
@@ -87,7 +86,6 @@
     .searchbar-container-small .search-submit {
         flex: none;
         width: 100%;
-        font-size: large;
 
         height: 52px;
     }

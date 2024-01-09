@@ -12,8 +12,8 @@
         <div class="meds-grid">
             <MedicationCard v-for="i in Array(16)" />
         </div>
+        
     </div>
-
 
 </template>
 

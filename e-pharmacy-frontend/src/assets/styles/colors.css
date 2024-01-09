@@ -31,7 +31,7 @@
 @property --secondary-bg-color {
     syntax: "<color>";
     inherits: false;
-    initial-value: #d7dfef;
+    initial-value: #F0F4FC;
 }
 
 @property --error-color {

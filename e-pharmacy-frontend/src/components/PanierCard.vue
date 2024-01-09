@@ -48,13 +48,13 @@
 
     h1 {
         margin: 0px;
-        font-size: calc(2.6vh + 0.3vw);
+        font-size: calc(2.6vh + 0.2vw);
         font-weight: 800;
     }
 
     h2 {
         margin: 0px;
-        font-size: 2.2vh;
+        font-size: calc(2.2vh + 0.2vw);
     }
 
     .details {
@@ -79,7 +79,7 @@
         width: min-content;
 
         color: var(--error-color);
-        font-size: calc(2vh + 0.2vw);
+        font-size: calc(1.9vh + 0.2vw);
 
         display: flex;
         align-items: center;

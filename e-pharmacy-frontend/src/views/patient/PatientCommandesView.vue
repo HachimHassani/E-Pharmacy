@@ -19,7 +19,7 @@ import PageContainer from '@/components/PageContainer.vue';
 
     h1 {
         margin: 0px;
-        font-size: calc(2.6vh + 0.3vw);
+        font-size: calc(2.6vh + 1vw);
         font-weight: 800;
     }
 
@@ -32,7 +32,7 @@ import PageContainer from '@/components/PageContainer.vue';
         border-top-right-radius: 16px;
         border-top-left-radius: 16px;
         background-color: var(--secondary-bg-color);
-    
+
     }
 </style>
 

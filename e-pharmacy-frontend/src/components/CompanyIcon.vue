@@ -33,10 +33,13 @@
 
         gap: 16px;
         color: var(--main-color);
+
+        transition: all 0.3s;
     }
 
     .company-icon img {
         width: 52px;
+        transition: all 0.3s;
     }
 
     .company-icon h1 {
@@ -46,6 +49,7 @@
         margin: auto;
 
         display: flex;
+        transition: all 0.3s;
     }
 
     .company-icon-big img {

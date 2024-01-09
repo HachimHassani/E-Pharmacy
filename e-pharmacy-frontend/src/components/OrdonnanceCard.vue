@@ -47,23 +47,23 @@ import ScreenTypes from '@/scripts/ScreenTypes';
     .left {
         flex: auto;
         display: flex;
-        justify-content: space-between;
         flex-direction: column;
     }
 
     h1 {
         margin: 0px;
-        font-size: calc(3vh + 0.3vw);
+        font-size: calc(3vh + 0.2vw);
         font-weight: 800;
     }
 
     h2 {
         margin: 0px;
-        font-size: calc(2.5vh + 0.3vw);
+        font-size: calc(2.5vh + 0.1vw);
     }
 
     .details {
-        font-size: calc(2vh + 0.2vw);
+        padding-top: 1vh;
+        font-size: calc(2vh + 0.1vw);
     }
 
     .right {
