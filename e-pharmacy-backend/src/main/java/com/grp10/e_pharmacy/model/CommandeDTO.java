@@ -2,6 +2,7 @@ package com.grp10.e_pharmacy.model;
 
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,10 +26,10 @@ public class CommandeDTO {
 
     private Long pharmacie;
 
-    private Long ordonance;
-
     private Long patient;
 
     private Long livreur;
+
+    private List<Long> medicaments;
 
 }

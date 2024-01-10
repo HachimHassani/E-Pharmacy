@@ -1,9 +1,13 @@
 package com.grp10.e_pharmacy.controller;
 
+import com.grp10.e_pharmacy.domain.Commande;
 import com.grp10.e_pharmacy.model.UserDTO;
+import com.grp10.e_pharmacy.repos.CommandeRepository;
 import com.grp10.e_pharmacy.service.UserService;
+import com.grp10.e_pharmacy.util.CustomCollectors;
 import com.grp10.e_pharmacy.util.WebUtils;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,9 +24,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     private final UserService userService;
+    private final CommandeRepository commandeRepository;
 
-    public UserController(final UserService userService) {
+    public UserController(final UserService userService,
+            final CommandeRepository commandeRepository) {
         this.userService = userService;
+        this.commandeRepository = commandeRepository;
+    }
+
+    @ModelAttribute
+    public void prepareContext(final Model model) {
+        model.addAttribute("panierValues", commandeRepository.findAll(Sort.by("id"))
+                .stream()
+                .collect(CustomCollectors.toSortedMap(Commande::getId, Commande::getAddressLivraison)));
     }
 
     @GetMapping
@@ -39,6 +53,9 @@ public class UserController {
     @PostMapping("/add")
     public String add(@ModelAttribute("user") @Valid final UserDTO userDTO,
             final BindingResult bindingResult, final RedirectAttributes redirectAttributes) {
+        if (!bindingResult.hasFieldErrors("panier") && userDTO.getPanier() != null && userService.panierExists(userDTO.getPanier())) {
+            bindingResult.rejectValue("panier", "Exists.user.panier");
+        }
         if (bindingResult.hasErrors()) {
             return "user/add";
         }
@@ -57,6 +74,12 @@ public class UserController {
     public String edit(@PathVariable(name = "id") final Long id,
             @ModelAttribute("user") @Valid final UserDTO userDTO, final BindingResult bindingResult,
             final RedirectAttributes redirectAttributes) {
+        final UserDTO currentUserDTO = userService.get(id);
+        if (!bindingResult.hasFieldErrors("panier") && userDTO.getPanier() != null &&
+                !userDTO.getPanier().equals(currentUserDTO.getPanier()) &&
+                userService.panierExists(userDTO.getPanier())) {
+            bindingResult.rejectValue("panier", "Exists.user.panier");
+        }
         if (bindingResult.hasErrors()) {
             return "user/edit";
         }

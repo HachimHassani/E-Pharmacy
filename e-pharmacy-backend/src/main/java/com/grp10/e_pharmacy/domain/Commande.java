@@ -10,10 +10,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import java.time.LocalDate;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -57,9 +60,8 @@ public class Commande {
     @JoinColumn(name = "pharmacie_id")
     private Pharmacie pharmacie;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ordonance_id", unique = true)
-    private Ordonance ordonance;
+    @OneToMany(mappedBy = "commande")
+    private Set<Ordonance> ordonances;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id")
@@ -68,5 +70,13 @@ public class Commande {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "livreur_id")
     private User livreur;
+
+    @ManyToMany
+    @JoinTable(
+            name = "CommandeMed",
+            joinColumns = @JoinColumn(name = "commandeId"),
+            inverseJoinColumns = @JoinColumn(name = "medicamentId")
+    )
+    private Set<Medicament> medicaments;
 
 }

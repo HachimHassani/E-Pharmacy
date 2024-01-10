@@ -1,11 +1,11 @@
 package com.grp10.e_pharmacy.controller;
 
-import com.grp10.e_pharmacy.domain.Ordonance;
+import com.grp10.e_pharmacy.domain.Medicament;
 import com.grp10.e_pharmacy.domain.Pharmacie;
 import com.grp10.e_pharmacy.domain.User;
 import com.grp10.e_pharmacy.model.CommandeDTO;
 import com.grp10.e_pharmacy.model.Statue;
-import com.grp10.e_pharmacy.repos.OrdonanceRepository;
+import com.grp10.e_pharmacy.repos.MedicamentRepository;
 import com.grp10.e_pharmacy.repos.PharmacieRepository;
 import com.grp10.e_pharmacy.repos.UserRepository;
 import com.grp10.e_pharmacy.service.CommandeService;
@@ -30,16 +30,16 @@ public class CommandeController {
 
     private final CommandeService commandeService;
     private final PharmacieRepository pharmacieRepository;
-    private final OrdonanceRepository ordonanceRepository;
     private final UserRepository userRepository;
+    private final MedicamentRepository medicamentRepository;
 
     public CommandeController(final CommandeService commandeService,
-            final PharmacieRepository pharmacieRepository,
-            final OrdonanceRepository ordonanceRepository, final UserRepository userRepository) {
+            final PharmacieRepository pharmacieRepository, final UserRepository userRepository,
+            final MedicamentRepository medicamentRepository) {
         this.commandeService = commandeService;
         this.pharmacieRepository = pharmacieRepository;
-        this.ordonanceRepository = ordonanceRepository;
         this.userRepository = userRepository;
+        this.medicamentRepository = medicamentRepository;
     }
 
     @ModelAttribute
@@ -48,15 +48,15 @@ public class CommandeController {
         model.addAttribute("pharmacieValues", pharmacieRepository.findAll(Sort.by("id"))
                 .stream()
                 .collect(CustomCollectors.toSortedMap(Pharmacie::getId, Pharmacie::getNom)));
-        model.addAttribute("ordonanceValues", ordonanceRepository.findAll(Sort.by("id"))
-                .stream()
-                .collect(CustomCollectors.toSortedMap(Ordonance::getId, Ordonance::getStatue)));
         model.addAttribute("patientValues", userRepository.findAll(Sort.by("id"))
                 .stream()
                 .collect(CustomCollectors.toSortedMap(User::getId, User::getNom)));
         model.addAttribute("livreurValues", userRepository.findAll(Sort.by("id"))
                 .stream()
                 .collect(CustomCollectors.toSortedMap(User::getId, User::getNom)));
+        model.addAttribute("medicamentsValues", medicamentRepository.findAll(Sort.by("id"))
+                .stream()
+                .collect(CustomCollectors.toSortedMap(Medicament::getId, Medicament::getNom)));
     }
 
     @GetMapping
@@ -73,9 +73,6 @@ public class CommandeController {
     @PostMapping("/add")
     public String add(@ModelAttribute("commande") @Valid final CommandeDTO commandeDTO,
             final BindingResult bindingResult, final RedirectAttributes redirectAttributes) {
-        if (!bindingResult.hasFieldErrors("ordonance") && commandeDTO.getOrdonance() != null && commandeService.ordonanceExists(commandeDTO.getOrdonance())) {
-            bindingResult.rejectValue("ordonance", "Exists.commande.ordonance");
-        }
         if (bindingResult.hasErrors()) {
             return "commande/add";
         }
@@ -94,12 +91,6 @@ public class CommandeController {
     public String edit(@PathVariable(name = "id") final Long id,
             @ModelAttribute("commande") @Valid final CommandeDTO commandeDTO,
             final BindingResult bindingResult, final RedirectAttributes redirectAttributes) {
-        final CommandeDTO currentCommandeDTO = commandeService.get(id);
-        if (!bindingResult.hasFieldErrors("ordonance") && commandeDTO.getOrdonance() != null &&
-                !commandeDTO.getOrdonance().equals(currentCommandeDTO.getOrdonance()) &&
-                commandeService.ordonanceExists(commandeDTO.getOrdonance())) {
-            bindingResult.rejectValue("ordonance", "Exists.commande.ordonance");
-        }
         if (bindingResult.hasErrors()) {
             return "commande/edit";
         }
@@ -111,8 +102,13 @@ public class CommandeController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable(name = "id") final Long id,
             final RedirectAttributes redirectAttributes) {
-        commandeService.delete(id);
-        redirectAttributes.addFlashAttribute(WebUtils.MSG_INFO, WebUtils.getMessage("commande.delete.success"));
+        final String referencedWarning = commandeService.getReferencedWarning(id);
+        if (referencedWarning != null) {
+            redirectAttributes.addFlashAttribute(WebUtils.MSG_ERROR, referencedWarning);
+        } else {
+            commandeService.delete(id);
+            redirectAttributes.addFlashAttribute(WebUtils.MSG_INFO, WebUtils.getMessage("commande.delete.success"));
+        }
         return "redirect:/commandes";
     }
 

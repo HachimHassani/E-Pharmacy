@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/pharmacy}
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/E-pharmacy}
     username: ${JDBC_DATABASE_USERNAME:postgres}
-    password: ${JDBC_DATABASE_PASSWORD:12345678}
+    password: ${JDBC_DATABASE_PASSWORD:<<YOUR_PASSWORD>>}
     dbcp2:
       max-wait-millis: 30000
       validation-query: select 1

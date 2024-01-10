@@ -1,12 +1,11 @@
 package com.grp10.e_pharmacy.service;
 
 import com.grp10.e_pharmacy.domain.Medicament;
-import com.grp10.e_pharmacy.domain.Ordonance;
 import com.grp10.e_pharmacy.model.MedicamentDTO;
+import com.grp10.e_pharmacy.repos.CommandeRepository;
 import com.grp10.e_pharmacy.repos.MedicamentRepository;
 import com.grp10.e_pharmacy.repos.OrdonanceRepository;
 import com.grp10.e_pharmacy.util.NotFoundException;
-import com.grp10.e_pharmacy.util.WebUtils;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.data.domain.Sort;
@@ -19,11 +18,14 @@ public class MedicamentService {
 
     private final MedicamentRepository medicamentRepository;
     private final OrdonanceRepository ordonanceRepository;
+    private final CommandeRepository commandeRepository;
 
     public MedicamentService(final MedicamentRepository medicamentRepository,
-            final OrdonanceRepository ordonanceRepository) {
+            final OrdonanceRepository ordonanceRepository,
+            final CommandeRepository commandeRepository) {
         this.medicamentRepository = medicamentRepository;
         this.ordonanceRepository = ordonanceRepository;
+        this.commandeRepository = commandeRepository;
     }
 
     public List<MedicamentDTO> findAll() {
@@ -58,6 +60,8 @@ public class MedicamentService {
         // remove many-to-many relations at owning side
         ordonanceRepository.findAllByMedicaments(medicament)
                 .forEach(ordonance -> ordonance.getMedicaments().remove(medicament));
+        commandeRepository.findAllByMedicaments(medicament)
+                .forEach(commande -> commande.getMedicaments().remove(medicament));
         medicamentRepository.delete(medicament);
     }
 
@@ -76,16 +80,6 @@ public class MedicamentService {
 
     public boolean nomExists(final String nom) {
         return medicamentRepository.existsByNomIgnoreCase(nom);
-    }
-
-    public String getReferencedWarning(final Long id) {
-        final Medicament medicament = medicamentRepository.findById(id)
-                .orElseThrow(NotFoundException::new);
-        final Ordonance medicamentsOrdonance = ordonanceRepository.findFirstByMedicaments(medicament);
-        if (medicamentsOrdonance != null) {
-            return WebUtils.getMessage("medicament.ordonance.medicaments.referenced", medicamentsOrdonance.getId());
-        }
-        return null;
     }
 
 }

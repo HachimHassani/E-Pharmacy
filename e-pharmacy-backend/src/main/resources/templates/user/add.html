@@ -16,6 +16,7 @@
             <form th:action="${requestUri}" method="post">
                 <div th:replace="~{fragments/forms::inputRow(object='user', field='nom')}" />
                 <div th:replace="~{fragments/forms::inputRow(object='user', field='role')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='user', field='panier', type='select')}" />
                 <input type="submit" th:value="#{user.add.headline}" class="inline-block text-white bg-blue-600 hover:bg-blue-700 focus:ring-blue-300  focus:ring-4 rounded px-5 py-2 mt-6" />
             </form>
         </div>

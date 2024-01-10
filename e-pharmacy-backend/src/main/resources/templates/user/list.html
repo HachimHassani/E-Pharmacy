@@ -20,6 +20,7 @@
                             <th scope="col" class="text-left p-2">[[#{user.id.label}]]</th>
                             <th scope="col" class="text-left p-2">[[#{user.nom.label}]]</th>
                             <th scope="col" class="text-left p-2">[[#{user.role.label}]]</th>
+                            <th scope="col" class="text-left p-2">[[#{user.panier.label}]]</th>
                             <th><!-- --></th>
                         </tr>
                     </thead>
@@ -28,6 +29,7 @@
                             <td class="p-2">[[${user.id}]]</td>
                             <td class="p-2">[[${user.nom}]]</td>
                             <td class="p-2">[[${user.role}]]</td>
+                            <td class="p-2">[[${user.panier}]]</td>
                             <td class="p-2">
                                 <div class="float-right whitespace-nowrap">
                                     <a th:href="@{/users/edit/{id}(id=${user.id})}" class="inline-block text-white bg-gray-500 hover:bg-gray-600 focus:ring-gray-200 focus:ring-3 rounded px-2.5 py-1.5 text-sm">[[#{user.list.edit}]]</a>

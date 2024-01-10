@@ -10,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import java.time.LocalDate;
 import java.util.Set;
@@ -59,7 +58,8 @@ public class Ordonance {
     @JoinColumn(name = "patient_id")
     private User patient;
 
-    @OneToOne(mappedBy = "ordonance", fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "commande_id")
     private Commande commande;
 
 }

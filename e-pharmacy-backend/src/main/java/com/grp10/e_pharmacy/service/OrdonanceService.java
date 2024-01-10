@@ -10,7 +10,6 @@ import com.grp10.e_pharmacy.repos.MedicamentRepository;
 import com.grp10.e_pharmacy.repos.OrdonanceRepository;
 import com.grp10.e_pharmacy.repos.UserRepository;
 import com.grp10.e_pharmacy.util.NotFoundException;
-import com.grp10.e_pharmacy.util.WebUtils;
 import jakarta.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
@@ -76,6 +75,7 @@ public class OrdonanceService {
                 .toList());
         ordonanceDTO.setDoctor(ordonance.getDoctor() == null ? null : ordonance.getDoctor().getId());
         ordonanceDTO.setPatient(ordonance.getPatient() == null ? null : ordonance.getPatient().getId());
+        ordonanceDTO.setCommande(ordonance.getCommande() == null ? null : ordonance.getCommande().getId());
         return ordonanceDTO;
     }
 
@@ -94,17 +94,10 @@ public class OrdonanceService {
         final User patient = ordonanceDTO.getPatient() == null ? null : userRepository.findById(ordonanceDTO.getPatient())
                 .orElseThrow(() -> new NotFoundException("patient not found"));
         ordonance.setPatient(patient);
+        final Commande commande = ordonanceDTO.getCommande() == null ? null : commandeRepository.findById(ordonanceDTO.getCommande())
+                .orElseThrow(() -> new NotFoundException("commande not found"));
+        ordonance.setCommande(commande);
         return ordonance;
-    }
-
-    public String getReferencedWarning(final Long id) {
-        final Ordonance ordonance = ordonanceRepository.findById(id)
-                .orElseThrow(NotFoundException::new);
-        final Commande ordonanceCommande = commandeRepository.findFirstByOrdonance(ordonance);
-        if (ordonanceCommande != null) {
-            return WebUtils.getMessage("ordonance.commande.ordonance.referenced", ordonanceCommande.getId());
-        }
-        return null;
     }
 
 }

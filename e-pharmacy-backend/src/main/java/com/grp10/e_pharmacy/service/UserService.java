@@ -18,15 +18,15 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final OrdonanceRepository ordonanceRepository;
     private final CommandeRepository commandeRepository;
+    private final OrdonanceRepository ordonanceRepository;
 
     public UserService(final UserRepository userRepository,
-            final OrdonanceRepository ordonanceRepository,
-            final CommandeRepository commandeRepository) {
+            final CommandeRepository commandeRepository,
+            final OrdonanceRepository ordonanceRepository) {
         this.userRepository = userRepository;
-        this.ordonanceRepository = ordonanceRepository;
         this.commandeRepository = commandeRepository;
+        this.ordonanceRepository = ordonanceRepository;
     }
 
     public List<UserDTO> findAll() {
@@ -63,13 +63,21 @@ public class UserService {
         userDTO.setId(user.getId());
         userDTO.setNom(user.getNom());
         userDTO.setRole(user.getRole());
+        userDTO.setPanier(user.getPanier() == null ? null : user.getPanier().getId());
         return userDTO;
     }
 
     private User mapToEntity(final UserDTO userDTO, final User user) {
         user.setNom(userDTO.getNom());
         user.setRole(userDTO.getRole());
+        final Commande panier = userDTO.getPanier() == null ? null : commandeRepository.findById(userDTO.getPanier())
+                .orElseThrow(() -> new NotFoundException("panier not found"));
+        user.setPanier(panier);
         return user;
+    }
+
+    public boolean panierExists(final Long id) {
+        return userRepository.existsByPanierId(id);
     }
 
     public String getReferencedWarning(final Long id) {

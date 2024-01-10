@@ -24,4 +24,6 @@ public class OrdonanceDTO {
 
     private Long patient;
 
+    private Long commande;
+
 }
