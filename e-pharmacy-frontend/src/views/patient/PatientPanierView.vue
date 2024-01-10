@@ -1,6 +1,7 @@
 <script setup>
     import PageContainer from '@/components/PageContainer.vue';
     import PanierCard from '@/components/PanierCard.vue'
+    import PanierCardTypes from '@/scripts/PanierCardTypes';
 </script>
 
 
@@ -12,7 +13,7 @@
 
         <!--Liste of command items-->
         <div class="panier-list">
-            <PanierCard v-for="i in Array(3)"/>
+            <PanierCard :price="15.221" title="ID XXXX" subTitle="Nom du medecin" :cardType="PanierCardTypes.Ordonnance" v-for="i in Array(3)"/>
         </div>
 
         <!--Delete all button-->
@@ -93,7 +94,6 @@
 
     .delete-all-container {
         width: 98%;
-
 
         display: flex;
         justify-content: end;

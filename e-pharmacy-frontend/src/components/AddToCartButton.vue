@@ -1,3 +1,6 @@
+<script setup>
+</script>
+
 <template>
     <button class="ajouter main-btn">
         <img src="../assets/icons/cart-white.svg" />
@@ -22,3 +25,14 @@
         width: calc(0.7vw + 1.8vh);
     }
 </style>
+
+<script>
+    export default {
+        props: {
+            medicamentId: {
+                type: Number,
+                required: true
+            }
+        }
+    }
+</script>

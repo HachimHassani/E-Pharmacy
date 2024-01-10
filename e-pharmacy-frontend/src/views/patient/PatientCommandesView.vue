@@ -1,7 +1,6 @@
 <script setup>
-import CommandeCard from '@/components/CommandeCard.vue';
-import PageContainer from '@/components/PageContainer.vue';
-
+    import CommandeCard from '@/components/CommandeCard.vue';
+    import PageContainer from '@/components/PageContainer.vue';
 </script>
 
 <template>
@@ -9,7 +8,11 @@ import PageContainer from '@/components/PageContainer.vue';
         <h1> Vos commandes </h1>
 
         <div class="commandes-list">
-            <CommandeCard v-for="i in Array(5)"/>
+            <CommandeCard v-for="i in [0, 1, 2]"
+            :commandeId="11472" 
+            date="00/00/0000"
+            :stade="i"
+            />
         </div>
     </PageContainer>
 </template>

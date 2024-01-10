@@ -16,4 +16,5 @@ app.config.globalProperties.$globalProperties = reactiveGlobalProperties;
 
 app.use(router)
 
+
 app.mount('#app')

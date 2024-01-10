@@ -1,13 +1,14 @@
 <script setup>
     import ScreenTypes from '@/scripts/ScreenTypes';
-import CompanyIcon from './CompanyIcon.vue';
+    import CompanyIcon from './CompanyIcon.vue';
     import Navlink from './Navlink.vue';
-import UserMenu from './UserMenu.vue';
+    import UserMenu from './UserMenu.vue';
 </script>
 
 <template>
     <nav :class="{
-        'navbar-scrolled': scrolled
+        'navbar-scrolled': scrolled,
+        'navbar-hidden': !isVisible
     }">
         <CompanyIcon :hideText="hideCompanyText"></CompanyIcon>
 
@@ -48,6 +49,9 @@ import UserMenu from './UserMenu.vue';
             },
             hideCompanyText() {
                 return this.$globalProperties.screenType == ScreenTypes.Mobile;
+            },
+            isVisible() {
+                return this.$route.path != '/'
             }
         }
     }
@@ -75,6 +79,11 @@ import UserMenu from './UserMenu.vue';
 
     .navbar-scrolled {
         box-shadow: 0px 4px 16px 1px var(--shadow-color);
+    }
+
+    .navbar-hidden {
+        transform: translateY(-64px);
+        opacity: 0%;
     }
 
     .navbar-buttons {

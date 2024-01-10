@@ -7,24 +7,36 @@ import { RouterLink } from 'vue-router';
 
         <div class="top-card">
             <div class="left">
-                <h1> ID xxxxxx </h1>
-                <h2> fait le XX/XX/XXXX</h2>
+                <h1> ID {{ commandeId }} </h1>
+                <h2> fait le {{ date }}</h2>
             </div>
 
             <div class="right">
-                <h1> En cours </h1>
+                <h1> {{ getStadeName }} </h1>
             </div>
         </div>
 
         <div class="progress-container">
 
             <div class="steps">
-                <span class="rectangle"/>
-                <span class="rectangle rectangle-second"/>
+                <span :class="{
+                    'rectangle': true,
+                    'rectangle-active': stade > 0
+                }"/>
+                <span :class="{
+                    'rectangle rectangle-second': true,
+                    'rectangle-active': stade > 1
+                }"/>
 
-                <span class="circle" />
-                <span class="circle" />
-                <span class="circle" />
+                <span class="circle circle-active" />
+                <span :class="{
+                    'circle': true,
+                    'circle-active': stade > 0
+                }" />
+                <span :class="{
+                    'circle': true,
+                    'circle-active': stade > 1
+                }" />
             </div>
 
             <div class="steps">
@@ -113,8 +125,15 @@ import { RouterLink } from 'vue-router';
         width: calc(4vh + 0.5vw + 0px);
         height: calc(4vh + 0.5vw + 0px);
         background-color: white;
+        outline-offset: -1px;
         outline: 2px solid black;
         border-radius: 100%;
+        border: none;
+    }
+
+    .circle-active {
+        background-color: black;
+        z-index: 1;
     }
 
     .rectangle {
@@ -122,8 +141,8 @@ import { RouterLink } from 'vue-router';
         top: calc((4vh + 0.5vw) / 4 - 2px);
         left: calc((4vh + 0.5vw) * 0.95 - 1px);
         
-        width: calc(50% - (4vh + 0.5vw) * (0.95 + 0.42) + 1px);
-        height: calc((4vh + 0.5vw) / 2);
+        width: calc(50% - (4vh + 0.5vw) * (0.95 + 0.42) + 2px);
+        height: calc((4vh + 0.5vw) / 2 - 2px);
 
         border-top: 2px solid black;
         border-bottom: 2px solid black;
@@ -133,8 +152,47 @@ import { RouterLink } from 'vue-router';
         z-index: 1;
     }
 
+    .rectangle-active {
+        background-color: black;
+        z-index: 1;
+    }
+
     .rectangle-second {
-        left: calc(50% + (4vh + 0.5vw) * 0.45 - 1px);
+        left: calc(50% + (4vh + 0.5vw) * 0.45 - 2px);
     }
 
 </style>
+
+<script>
+    export default {
+        props: {
+            commandeId: {
+                type: Number,
+                required: true
+            },
+            stade: {
+                type: Number,
+                required: true,
+            },
+            date: {
+                type: String,
+                required: true,
+            }
+        },
+        computed: {
+            getStadeName() {
+                switch(this.stade) {
+                    case 0:
+                        return "Envoye"
+                    case 1:
+                        return "En cours"
+                    case 2:
+                        return "Arrive"
+                    default:
+                }
+
+                return "Inconnu"; 
+            }
+        }
+    }
+</script>

@@ -1,22 +1,32 @@
 <script setup>
     import { RouterLink } from 'vue-router';
+    import { formatPrice } from '@/scripts/Format';
+    import PanierCardTypes from '@/scripts/PanierCardTypes';
 </script>
 
 <template>
-    <div class="card">
-        <div class="left">
-            <h1> ID xxxxxx </h1>
-            <h2> Nom du medecin </h2>
 
-            <button class="delete-button">
-                <img src="../assets/icons/trash.svg" />
-                <div> Supprimer </div>
-            </button>
-        </div>
+    <div :class="{
+        'card-container': true,
+        'card-container-disabled': !enabled
+    }">
 
-        <div class="right">
-            <h1>999,99 MAD</h1>
+        <div class="card">
 
+            <div class="left">
+                <h1> {{ title }} </h1>
+                <h2> {{ subTitle }} </h2>
+    
+                <button class="delete-button" @click="onDeleteClick()">
+                    <img src="../assets/icons/trash.svg" />
+                    <div> Supprimer </div>
+                </button>
+            </div>
+    
+            <div class="right">
+                <h1> {{ formatedPrice }} </h1>
+            </div>
+        
         </div>
 
     </div>
@@ -25,74 +35,47 @@
 </template>
 
 <style scoped>
-    @import "../assets/styles/colors.css";
-
-    .card {
-        background-color: white;
-        padding: 1.3vh;
-        border-radius: 1vh;
-        margin: 1.5vh;
-        margin-top: 0px;
-
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .left {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-
-        gap: 0.6vw;
-    }
-
-    h1 {
-        margin: 0px;
-        font-size: calc(2.6vh + 0.2vw);
-        font-weight: 800;
-    }
-
-    h2 {
-        margin: 0px;
-        font-size: calc(2.2vh + 0.2vw);
-    }
-
-    .details {
-        font-size: 2vh;
-    }
-
-    .right {
-        display: flex;
-        align-items: end;
-        flex-direction: column;
-        justify-content: space-between;
-
-        gap: 1vh;
-    }
-
-    .delete-button {
-        margin: 0;
-        margin-top: 1vh;
-
-        padding: 0;
-
-        width: min-content;
-
-        color: var(--error-color);
-        font-size: calc(1.9vh + 0.2vw);
-
-        display: flex;
-        align-items: center;
-        gap: 1vh;
-
-        background-color: transparent;
-        outline: none;
-        border: none;
-
-        cursor: pointer;
-    }
-
-    .delete-button img {
-        width: calc(2.5vh + 0.2vw);;
-    }
+    @import "@/assets/styles/panier_card.css";
 </style>
+
+<script>
+    export default {
+        props: {
+            cardType: {
+                type: String,
+                default: PanierCardTypes.Ordonnance
+            },
+            price: {
+                type: Number,
+                required: true
+            },
+            title: {
+                type: String,
+                required: true
+            },
+            subTitle: {
+                type: String,
+                required: true
+            }
+
+        },
+
+        data() {
+            return {
+                enabled: true
+            }
+        },
+
+        methods: {
+            onDeleteClick() {
+                this.enabled = false;
+            }
+        },
+
+        computed: {
+            formatedPrice() {
+                return formatPrice(this.price);
+            }
+        }
+    }
+</script>

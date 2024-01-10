@@ -1,6 +1,6 @@
 <script setup>
     import AddToCartButton from '@/components/AddToCartButton.vue'
-import ScreenTypes from '@/scripts/ScreenTypes';
+    import ScreenTypes from '@/scripts/ScreenTypes';
 </script>
 
 <template>

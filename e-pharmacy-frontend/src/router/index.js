@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
+    scrollBehavior(to, from, savedPosition) {
+        window.scroll(0, 0);
+    },
     routes: [
         {
             path: '/',
@@ -14,7 +17,7 @@ const router = createRouter({
 
             children: [
                 {
-                    path: '/',
+                    path: '',
                     name:'patient-home',
                     component: () => import('../views/patient/PatientHomeView.vue'),
                 },
