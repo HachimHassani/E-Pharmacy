@@ -19,7 +19,10 @@ jobs:
                     java-version: '17'
                     distribution: 'adopt'
             - name: Build with Maven
-              run: mvn -f pom.xml clean test
+              run: ./mvnw clean install -DskipTests
+              working-directory: ./e-pharmacy-backend
+            - name: test
+              run: ./mvnw test
               working-directory: ./e-pharmacy-backend
 
            
