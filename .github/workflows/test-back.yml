@@ -21,11 +21,11 @@ jobs:
                     java-version: '11'
                     distribution: 'adopt'
             - name: Build with Maven
-              run: mvnw clean install -DskipTests
+              run: mvn -f pom.xml clean test
               working-directory: ./e-pharmacy-backend
 
             - name: Run tests
-              run: mvnw test
+              run: mvn test
               working-directory: ./e-pharmacy-backend
 
             
