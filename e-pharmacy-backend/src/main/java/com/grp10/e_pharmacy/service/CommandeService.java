@@ -6,6 +6,8 @@ import com.grp10.e_pharmacy.domain.Ordonance;
 import com.grp10.e_pharmacy.domain.Pharmacie;
 import com.grp10.e_pharmacy.domain.User;
 import com.grp10.e_pharmacy.model.CommandeDTO;
+import com.grp10.e_pharmacy.model.Role;
+import com.grp10.e_pharmacy.model.Statue;
 import com.grp10.e_pharmacy.repos.CommandeRepository;
 import com.grp10.e_pharmacy.repos.MedicamentRepository;
 import com.grp10.e_pharmacy.repos.OrdonanceRepository;
@@ -16,6 +18,7 @@ import com.grp10.e_pharmacy.util.WebUtils;
 import jakarta.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -54,13 +57,41 @@ public class CommandeService {
                 .map(commande -> mapToDTO(commande, new CommandeDTO()))
                 .orElseThrow(NotFoundException::new);
     }
-
+    public void addpanier(final Long id, final Commande commande){
+        final User user = userRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+        user.setPanier(commande);
+        userRepository.save(user);
+    }
     public Long create(final CommandeDTO commandeDTO) {
         final Commande commande = new Commande();
         mapToEntity(commandeDTO, commande);
-        return commandeRepository.save(commande).getId();
+        commande.setStatue(Statue.PANIER);
+        commandeRepository.save(commande);
+        addpanier(commandeDTO.getPatient(), commande);
+        return commande.getId();
     }
 
+    public void confirm(final Long id) {
+        final Commande commande = commandeRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+        commande.setStatue(Statue.CONFIRME);
+        List<Pharmacie> pharmacies = pharmacieRepository.findAll();
+        if (!pharmacies.isEmpty()) {
+            Random random = new Random();
+            Pharmacie randomPharmacy = pharmacies.get(random.nextInt(pharmacies.size()));
+            commande.setPharmacie(randomPharmacy);
+        }
+
+        // Assign a random delivery person with the DELIVERY role (for illustration purposes)
+        List<User> deliveryPersons = userRepository.findByRole(Role.LIVREUR);
+        if (!deliveryPersons.isEmpty()) {
+            Random random = new Random();
+            User randomDeliveryPerson = deliveryPersons.get(random.nextInt(deliveryPersons.size()));
+            commande.setLivreur(randomDeliveryPerson);
+        }
+        commandeRepository.save(commande);
+    }
     public void update(final Long id, final CommandeDTO commandeDTO) {
         final Commande commande = commandeRepository.findById(id)
                 .orElseThrow(NotFoundException::new);

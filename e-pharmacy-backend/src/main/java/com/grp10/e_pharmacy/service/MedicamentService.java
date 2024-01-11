@@ -41,6 +41,12 @@ public class MedicamentService {
                 .orElseThrow(NotFoundException::new);
     }
 
+    public List<MedicamentDTO> searchByName(String name) {
+        List<Medicament> medicaments = medicamentRepository.findByMedicamentNameContainingIgnoreCase(name);
+        return medicaments.stream()
+                .map(medicament -> mapToDTO(medicament, new MedicamentDTO()))
+                .toList();
+    }
     public Long create(final MedicamentDTO medicamentDTO) {
         final Medicament medicament = new Medicament();
         mapToEntity(medicamentDTO, medicament);

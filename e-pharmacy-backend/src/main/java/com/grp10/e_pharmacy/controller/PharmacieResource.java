@@ -1,4 +1,4 @@
-package com.grp10.e_pharmacy.rest;
+package com.grp10.e_pharmacy.controller;
 
 import com.grp10.e_pharmacy.model.PharmacieDTO;
 import com.grp10.e_pharmacy.service.PharmacieService;

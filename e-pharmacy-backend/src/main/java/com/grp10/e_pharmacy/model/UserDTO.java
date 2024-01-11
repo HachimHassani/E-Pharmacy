@@ -15,7 +15,7 @@ public class UserDTO {
     private String nom;
 
     @Size(max = 255)
-    private String role;
+    private Role role;
 
     private Long panier;
 

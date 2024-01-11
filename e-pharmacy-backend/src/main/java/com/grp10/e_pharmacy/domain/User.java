@@ -1,5 +1,6 @@
 package com.grp10.e_pharmacy.domain;
 
+import com.grp10.e_pharmacy.model.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,7 +41,7 @@ public class User {
     private String nom;
 
     @Column
-    private String role;
+    private Role role;
 
     @OneToMany(mappedBy = "patient")
     private Set<Ordonance> ordonances;

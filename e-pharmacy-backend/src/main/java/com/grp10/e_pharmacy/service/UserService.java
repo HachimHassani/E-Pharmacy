@@ -80,6 +80,12 @@ public class UserService {
         return userRepository.existsByPanierId(id);
     }
 
+    public Commande getPanier(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(NotFoundException::new);
+        return user.getPanier();
+    }
+
     public String getReferencedWarning(final Long id) {
         final User user = userRepository.findById(id)
                 .orElseThrow(NotFoundException::new);

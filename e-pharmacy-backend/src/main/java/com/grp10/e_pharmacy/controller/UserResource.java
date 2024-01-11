@@ -1,5 +1,6 @@
-package com.grp10.e_pharmacy.rest;
+package com.grp10.e_pharmacy.controller;
 
+import com.grp10.e_pharmacy.domain.Commande;
 import com.grp10.e_pharmacy.model.UserDTO;
 import com.grp10.e_pharmacy.service.UserService;
 import jakarta.validation.Valid;
@@ -41,6 +42,11 @@ public class UserResource {
     public ResponseEntity<Long> createUser(@RequestBody @Valid final UserDTO userDTO) {
         final Long createdId = userService.create(userDTO);
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
+    }
+
+    @GetMapping("user/{id}/panier")
+    public ResponseEntity<Commande> getUsersPanier(@PathVariable(name = "id") final Long id) {
+        return ResponseEntity.ok(userService.getPanier(id));
     }
 
     @PutMapping("/{id}")

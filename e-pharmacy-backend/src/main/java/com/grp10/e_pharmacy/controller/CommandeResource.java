@@ -1,4 +1,4 @@
-package com.grp10.e_pharmacy.rest;
+package com.grp10.e_pharmacy.controller;
 
 import com.grp10.e_pharmacy.model.CommandeDTO;
 import com.grp10.e_pharmacy.service.CommandeService;
@@ -43,6 +43,11 @@ public class CommandeResource {
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
+    @PostMapping("/{id}/confirm")
+    public ResponseEntity<Void> confirmCommande(@PathVariable(name = "id") final Long id) {
+        commandeService.confirm(id);
+        return ResponseEntity.noContent().build();
+    }
     @PutMapping("/{id}")
     public ResponseEntity<Long> updateCommande(@PathVariable(name = "id") final Long id,
             @RequestBody @Valid final CommandeDTO commandeDTO) {
