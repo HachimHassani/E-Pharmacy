@@ -1,10 +1,15 @@
 <script setup>
-    import PageContainer from '@/components/PageContainer.vue';
+    import Loading from '@/components/Loading.vue';
+import PageContainer from '@/components/PageContainer.vue';
     import PanierCard from '@/components/PanierCard.vue'
+import { formatPrice } from '@/scripts/Format';
+    import PanierCardTypes from '@/scripts/PanierCardTypes';
 </script>
 
 
 <template>
+    <Loading :isLoading="isLoading"/>
+    
     <PageContainer class="page-container">
         <h1>
             Votre panier
@@ -12,7 +17,13 @@
 
         <!--Liste of command items-->
         <div class="panier-list">
-            <PanierCard v-for="i in Array(3)"/>
+            <PanierCard v-for="item, i in items" 
+            :price="item?.price" 
+            :title="item?.title" 
+            :subTitle="item?.subTitle" 
+            :cardType="PanierCardTypes.Ordonnance"
+            :enabled="item != undefined" 
+            @onDelete="onDeleteCard(i)"/>
         </div>
 
         <!--Delete all button-->
@@ -35,7 +46,7 @@
                 </div>
 
                 <div class="price">
-                    99,99 MAD
+                    {{ formatedTotalCommande }}
                 </div>
             </div>
 
@@ -48,7 +59,7 @@
                 </div>
 
                 <div class="price">
-                    14,99 MAD
+                    {{ formatedLivraisonPrice }}
                 </div>
             </div>
 
@@ -61,11 +72,11 @@
                 </div>
 
                 <div class="price">
-                    99,99 MAD
+                    {{ formatedTotal }}
                 </div>
             </div>
 
-            <button class="main-btn commander-btn">
+            <button class="main-btn commander-btn" @click="$router.push('/patient/commandes')">
                 Commander
             </button>
 
@@ -93,7 +104,6 @@
 
     .delete-all-container {
         width: 98%;
-
 
         display: flex;
         justify-content: end;
@@ -125,15 +135,16 @@
         justify-content: center;
         align-items: center;
         gap: 0.5vw;
-    }
 
+        cursor: pointer;
+    }
+    
     .delete-btn svg {
         width: 3vh;
         fill: var(--error-color);
     }
-
+    
     .delete-btn:hover {
-        cursor: pointer;
         background-color: var(--error-color);
         color: white;
     }
@@ -141,6 +152,8 @@
     .delete-btn:hover svg {
         fill: white;
     }
+
+
 
     /** Command section */
     .command-container {
@@ -185,3 +198,57 @@
     }
 
 </style>
+
+<script>
+    export default {
+        data() {
+            return {
+                isLoading: true,
+                items: [],
+                livraisonPrice: 14.99
+            }
+        }, 
+
+        mounted() {
+            setTimeout(() => {
+                this.items = this.$cookies.get('panier');
+                this.isLoading = false;
+            }, 600);
+        },
+
+        unmounted() {
+            // save cookies
+            this.$cookies.set('panier', this.items);
+        },
+
+        methods: {
+            totalCommande() {
+                let total = 0;
+
+                this.items.forEach((item) => {
+                    if (item)
+                        total += item.price;
+                });
+
+                return total;
+            },
+            onDeleteCard(i) {
+                delete this.items[i];
+            }
+        },
+
+        computed: {
+            formatedTotalCommande() {
+                return formatPrice(this.totalCommande());
+            },
+
+            formatedLivraisonPrice() {
+                return formatPrice(this.livraisonPrice);
+            },
+
+            formatedTotal() {
+                return formatPrice(this.totalCommande() + this.livraisonPrice);
+            }
+        }
+    }
+</script>

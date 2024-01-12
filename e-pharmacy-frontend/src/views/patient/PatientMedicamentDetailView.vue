@@ -1,29 +1,31 @@
 <script setup>
     import AddToCartButton from '@/components/AddToCartButton.vue';
     import PageContainer from '@/components/PageContainer.vue';
+    import { formatPrice } from '@/scripts/Format';
+    import Loading from '@/components/Loading.vue';
 </script>
 
 <template>
     <PageContainer class="page-container">
-        <img src="@/assets/placeholders/pomade-jaune.png"/>
+        <Loading :isLoading="isLoading"/>
+        
+        <img :src="medicament.imagePath"/>
 
         <div class="medicament-detail">
-            <h1> Aureomycine </h1>
+            <h1> {{ medicament.brandName }} </h1>
 
-            <h2> Pommade ophtalmique 5g </h2>
+            <h2> {{ medicament.medicationName }} </h2>
 
             <div class="line-separation"/>
 
             <div class="description">
-                Aureomycin 1% – Pommade ophtalmique 5 g
-                <br/> <br/> 
-                Traitement des infections au niveau de l’œil et de ses muqueuses
+                {{ medicament.description }}
             </div>
 
             <div class="line-separation"/>
 
             <div class="price">
-                9,99 MAD
+                {{ formatedPrice }}
             </div>
 
             <div class="state">
@@ -33,7 +35,12 @@
 
             <div class="add-container">
                 <input type="number" min="1" max="9999" value="1"/>
-                <AddToCartButton style="flex: auto;"/>
+                <AddToCartButton 
+                :item="{
+                    'title': medicament.brandName,
+                    'subTitle': medicament.medicationName,
+                    'price': medicament.price
+                }" style="flex: auto;"/>
             </div>
         </div>
 
@@ -41,8 +48,6 @@
 </template>
 
 <style scoped>
-
-
     .page-container img {
         transform: rotate(8deg);
         width: 80%;
@@ -50,6 +55,8 @@
     }
 
     .medicament-detail {
+        z-index: 1;
+
         width: calc(98% - 6vh);
         display: flex;
         flex-direction: column;
@@ -136,3 +143,37 @@
     }
 
 </style>
+
+<script>
+    export default {
+        data() {
+            return {
+                medicament: {
+                    brandName: "",
+                    medicationName: "",
+                    description: "",
+                    price: 0,
+                    imagePath: ""
+                },
+                isLoading: true
+            }
+        },
+
+        mounted() {
+            fetch('/src/assets/placeholders/medicaments.json')
+                .then((response) => response.json())
+                .then((json) => {
+                    setTimeout(() => {
+                        this.medicament = json[this.$route.params.id];
+                        this.isLoading = false;
+                    }, Math.random() * 400);
+                });
+        },
+
+        computed: {
+            formatedPrice() {
+                return formatPrice(this.medicament.price);
+            }
+        }
+    }
+</script>

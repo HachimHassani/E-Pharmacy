@@ -1,0 +1,35 @@
+[
+    {
+        "ordonnanceId": 152178,
+        "nomMedecin": "Dr. Ksiks",
+        "nomPatient": "Mr. Ksiks Mohamed Haitam",
+        "date": "11-01-2024",
+        "lieu": "Rabat",
+        "medicaments": [
+            {
+                "brandName": "Doliprane",
+                "medicationName": "Paracetamol",
+                "price": 14.99
+            },
+            {
+                "brandName": "Tussidane",
+                "medicationName": "1,5 mg/ml sans sucre",
+                "price": 24.99
+            }
+        ]
+    },
+    {
+        "ordonnanceId": 32158,
+        "nomMedecin": "Dr. Tbib",
+        "nomPatient": "Mr. Ksiks Mohamed Haitam",
+        "date": "01-01-2024",
+        "lieu": "Rabat",
+        "medicaments": [
+            {
+                "brandName": "Tussidane",
+                "medicationName": "1,5 mg/ml sans sucre",
+                "price": 24.99
+            }
+        ]
+    }
+]

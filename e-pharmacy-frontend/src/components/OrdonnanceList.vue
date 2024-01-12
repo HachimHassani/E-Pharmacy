@@ -1,21 +1,24 @@
 <script setup>
     import Searchbar from './Searchbar.vue';
     import OrdonnanceCard from './OrdonnanceCard.vue';
+import Loading from './Loading.vue';
+import { getOrdonnancePrice } from '@/scripts/Ordonnance';
 </script>
 
 <template>
-
+    
     <div class="ordonnances-container">
+        <Loading :isLoading="isLoading"/>
 
-        <Searchbar class="searchbar-container" />
+        <Searchbar class="searchbar-container" placeholder="Cherchez votre ordonnance" />
 
         <div class="ordonnance-list">
-            <OrdonnanceCard />
-            <OrdonnanceCard />
-            <OrdonnanceCard />
-            <OrdonnanceCard />
-            <OrdonnanceCard />
-            <OrdonnanceCard />
+            <OrdonnanceCard v-for="ordonnance in ordonnances" 
+            :ordonnanceId="ordonnance.ordonnanceId"
+            :nomMedecin="ordonnance.nomMedecin"
+            :date="ordonnance.date"
+            :lieu="ordonnance.lieu"
+            :price="getOrdonnancePrice(ordonnance)"/>
         </div>
     </div>
 
@@ -48,3 +51,27 @@
     }
 
 </style>
+
+<script>
+    export default {
+        data() {
+            return {
+                isLoading: true,
+                ordonnances: []
+            }
+        },
+
+        mounted() {
+            fetch('/src/assets/placeholders/ordonnances.json')
+                .then((response) => response.json())
+                .then((json) => {
+                    setTimeout(() => {
+                        this.ordonnances = json;
+                        this.isLoading = false;
+                    }, 700);
+                });
+        },
+
+
+    }
+</script>

@@ -9,8 +9,8 @@
         'searchbar-container-small': isSmall
         }">
         
-        <input class="search-input" type="text" placeholder="Search..">
-        <button class="main-btn search-submit"> Rechercher </button>
+        <input v-model="searchBarValue" class="search-input" type="text" :placeholder="placeholder">
+        <button @click="onSearchButtonClick()" class="main-btn search-submit"> Rechercher </button>
 
     </div>
 </template>
@@ -95,6 +95,26 @@
 
 <script>
     export default {
+
+        props: {
+            placeholder: {
+                type: String,
+                default: ""
+            }
+        },
+
+        data() {
+            return {
+                searchBarValue: ''
+            }
+        },
+
+        methods: {
+            onSearchButtonClick() {
+                this.$emit('onSearch', this.searchBarValue);
+            }
+        },
+
         computed: {
             isSmall() {
                 return this.$globalProperties.screenType != ScreenTypes.Desktop;

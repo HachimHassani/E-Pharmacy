@@ -17,7 +17,6 @@
         display: flex;
         align-items: center;
         flex-direction: column;
-
     }
 
     .page-container h1 {
