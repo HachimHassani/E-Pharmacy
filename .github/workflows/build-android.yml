@@ -1,0 +1,53 @@
+name: Build Android APK
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps: 
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with: 
+                node-version: 20.5.1
+            - uses: actions/setup-java@v3
+              with:
+                distribution: 'zulu' # See 'Supported distributions' for available options
+                java-version: '17'
+                cache: 'gradle'
+            - name: Build Android application
+              run: |
+                npm install
+                npm run build
+                npm run android
+                cd android
+                ./gradlew assemble
+              working-directory: ./e-pharmacy-frontend
+                
+            - uses: r0adkll/sign-android-release@v1
+              name: Sign Android Application
+              # ID used to access action output
+              id: sign_app
+              with:
+                releaseDirectory: e-pharmacy-frontend/android/app/build/outputs/apk/release
+                signingKeyBase64: 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
+                alias: ksiks_wa3r
+                keyStorePassword: ensias
+                keyPassword: ensias
+
+            # upload release
+            - uses: "marvinpinto/action-automatic-releases@latest"
+              with:
+                repo_token: "${{ secrets.GITHUB_TOKEN }}"
+                automatic_release_tag: "latest"
+                prerelease: true
+                title: "Release"
+                files: |
+                    ${{ steps.sign_app.outputs.signedReleaseFile }}
+
+                
