@@ -62,7 +62,7 @@ import { getOrdonnancePrice } from '@/scripts/Ordonnance';
         },
 
         mounted() {
-            fetch('/src/assets/placeholders/ordonnances.json')
+            fetch('/placeholders/ordonnances.json')
                 .then((response) => response.json())
                 .then((json) => {
                     setTimeout(() => {

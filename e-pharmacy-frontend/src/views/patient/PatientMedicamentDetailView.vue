@@ -29,7 +29,7 @@
             </div>
 
             <div class="state">
-                <img src="@/assets/icons/ok.svg"/>
+                <img src="/icons/ok.svg"/>
                 En Stock
             </div>
 
@@ -160,7 +160,7 @@
         },
 
         mounted() {
-            fetch('/src/assets/placeholders/medicaments.json')
+            fetch('/placeholders/medicaments.json')
                 .then((response) => response.json())
                 .then((json) => {
                     setTimeout(() => {

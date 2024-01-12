@@ -179,7 +179,7 @@ import Loading from '@/components/Loading.vue';
         },
 
         mounted() {
-            fetch('/src/assets/placeholders/ordonnances.json')
+            fetch('/placeholders/ordonnances.json')
                 .then((response) => response.json())
                 .then((json) => {
                     setTimeout(() => {

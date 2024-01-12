@@ -3,7 +3,7 @@
 
 <template>
     <button class="ajouter main-btn" @click="onClick()">
-        <img src="../assets/icons/cart-white.svg" />
+        <img src="/icons/cart-white.svg" />
         Ajouter au panier
     </button>
 </template>

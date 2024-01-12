@@ -14,13 +14,13 @@
 
         <div class="navbar-buttons">
 
-            <Navlink iconPath="../assets/icons/home.svg" :isBig="isNavlinkBig" to="/patient"> Acceuil </Navlink>
+            <Navlink iconPath="/icons/home.svg" :isBig="isNavlinkBig" to="/patient"> Acceuil </Navlink>
 
-            <Navlink iconPath="../assets/icons/meds.svg" :isBig="isNavlinkBig" iconSize="30" to="/patient/medicaments"> Medicaments </Navlink>
+            <Navlink iconPath="/icons/meds.svg" :isBig="isNavlinkBig" iconSize="30" to="/patient/medicaments"> Medicaments </Navlink>
 
-            <Navlink iconPath="../assets/icons/notifs.svg" :isBig="isNavlinkBig" to="/patient/ordonnances"> Ordonnances </Navlink>
+            <Navlink iconPath="/icons/notifs.svg" :isBig="isNavlinkBig" to="/patient/ordonnances"> Ordonnances </Navlink>
 
-            <Navlink isBig="false" iconPath="../assets/icons/cart.svg" :isBig="isNavlinkBig" iconSize="38" to="/patient/panier" ></Navlink>
+            <Navlink isBig="false" iconPath="/icons/cart.svg" :isBig="isNavlinkBig" iconSize="38" to="/patient/panier" ></Navlink>
 
             <UserMenu />
        

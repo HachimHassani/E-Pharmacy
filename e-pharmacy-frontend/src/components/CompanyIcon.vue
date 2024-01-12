@@ -4,7 +4,7 @@
         'company-icon-small': !isBig,
         'company-icon-big': isBig
     }"> 
-        <img src="../assets/icons/my-pharmacy.svg" draggable="false"/>
+        <img src="/icons/my-pharmacy.svg" draggable="false"/>
         <h1 v-if="!hideText"> My Pharmacy </h1>
     </div>
 </template>
