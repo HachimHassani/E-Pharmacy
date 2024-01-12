@@ -36,6 +36,6 @@ jobs:
                 automatic_release_tag: "latest"
                 prerelease: true
                 title: "DebugAPK"
-                files: e-pharmacy-frontend/android/app/build/outputs/apk/release/app-debug.apk
+                files: e-pharmacy-frontend/android/app/build/outputs/apk/debug/app-debug.apk
 
                 
