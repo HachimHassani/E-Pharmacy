@@ -23,6 +23,9 @@
 <script>
     export default {
         mounted() {
+            // init cookies
+            this.$cookies.set('panier', []);
+
             // init screen type
             this.$globalProperties.screenType = this.getScreenType(window.innerWidth, window.innerHeight);
 

@@ -1,29 +1,34 @@
 <script setup>
     import AddToCartButton from '@/components/AddToCartButton.vue'
+    import { formatPrice } from '@/scripts/Format';
     import ScreenTypes from '@/scripts/ScreenTypes';
 </script>
 
 <template>
     <div class="ordonnance-card">
         <div class="left">
-            <h1> ID xxxxxx </h1>
-            <h2> Nom du medecin </h2>
+            <h1> ID {{ ordonnanceId }} </h1>
+            <h2> {{ nomMedecin }} </h2>
 
             <div class="details">
-                Fait le xx/xx/xxxx <br/>
-                a Nom de la ville
+                Fait le {{ date }} <br/>
+                a {{ lieu }}
             </div>
         </div>
 
         <div class="right">
-            <h1>999,99 MAD</h1>
+            <h1> {{ formatedPrice }} </h1>
             
             <div :class="{
                 'buttons-container': true,
                 'buttons-container-small': isSmall
             }">
-                <AddToCartButton></AddToCartButton>
-                <RouterLink v-if="!isSmall" to="/" class="details-btn">
+                <AddToCartButton :item="{
+                    'title': `ID ${ordonnanceId}`,
+                    'subTitle': nomMedecin,
+                    'price': price
+                }" />
+                <RouterLink v-if="!isSmall" :to="`/patient/ordonnance/${ordonnanceId}`" class="details-btn">
                     Details
                 </RouterLink>
             </div>
@@ -105,10 +110,37 @@
 
 <script>
     export default {
+        props: {
+            ordonnanceId: {
+                type: Number,
+                required: true
+            },
+            nomMedecin: {
+                type: String,
+                required: true
+            },
+            date: {
+                type: String,
+                required: true
+            },
+            lieu: {
+                type: String,
+                required: true
+            },
+            price: {
+                type: Number,
+                required: true
+            }
+        },
+
         computed: {
+            formatedPrice() {
+                return formatPrice(this.price);
+            },
             isSmall() {
                 return this.$globalProperties.screenType == ScreenTypes.Mobile;
-            }
+            },
+
         }
     }
 </script>

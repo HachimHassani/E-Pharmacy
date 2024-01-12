@@ -4,69 +4,62 @@
         "medicationName": "Pommade ophtalmique",
         "description": "Aureomycin 1% – Pommade ophtalmique 5g",
         "price": 9.99,
-        "imagePath": "/src/assets/placeholders/pomade-jaune.png"
+        "imagePath": "/src/assets/placeholders/meds/pomade-jaune.png"
     },
     {
-        "brandName": "Aureomycine",
-        "medicationName": "Pommade ophtalmique",
-        "description": "Aureomycin 1% – Pommade ophtalmique 5g",
-        "price": 9.99,
-        "imagePath": "/src/assets/placeholders/pomade-jaune.png"
+        "brandName": "Isobetadine",
+        "medicationName": "10% 125 ML",
+        "description": "L'iso-Betadine® contient de la povidone iodée ou PVP-I. On dit également qu'il s'agit d'un antiseptique à large spectre car il tue tous les microbes (bactéries, champignons, virus).",
+        "price": 49.99,
+        "imagePath": "/src/assets/placeholders/meds/betadine.jpg"
     },
     {
-        "brandName": "Aureomycine",
-        "medicationName": "Pommade ophtalmique",
-        "description": "Aureomycin 1% – Pommade ophtalmique 5g",
-        "price": 9.99,
-        "imagePath": "/src/assets/placeholders/pomade-jaune.png"
+        "brandName": "Doliprane",
+        "medicationName": "Doliprane 1000 mg comprimé",
+        "description": "Douleurs et fièvre - Adultes et adolescents >50kg",
+        "price": 19.99,
+        "imagePath": "/src/assets/placeholders/meds/doliprane.jpg"
     },
     {
-        "brandName": "Aureomycine",
-        "medicationName": "Pommade ophtalmique",
-        "description": "Aureomycin 1% – Pommade ophtalmique 5g",
-        "price": 9.99,
-        "imagePath": "/src/assets/placeholders/pomade-jaune.png"
+        "brandName": "Movicol",
+        "medicationName": "MOVICOL 20 SACHETS",
+        "description": "Constipation chronique & Impaction fécale",
+        "price": 14.99,
+        "imagePath": "/src/assets/placeholders/meds/movicol.jpg"
     },
     {
-        "brandName": "Aureomycine",
-        "medicationName": "Pommade ophtalmique",
-        "description": "Aureomycin 1% – Pommade ophtalmique 5g",
-        "price": 9.99,
-        "imagePath": "/src/assets/placeholders/pomade-jaune.png"
+        "brandName": "MELISANA",
+        "medicationName": "SOFRASOLONE SPRAY MICRODOSEUR 10 ML",
+        "description": "Adultes en enfants à partir de 12 ans1 à 2 pulvérisations dans chaque narine, 3 à 4 x par jour",
+        "price": 71.50,
+        "imagePath": "/src/assets/placeholders/meds/spray.jpg"
     },
     {
-        "brandName": "Aureomycine",
-        "medicationName": "Pommade ophtalmique",
-        "description": "Aureomycin 1% – Pommade ophtalmique 5g",
-        "price": 9.99,
-        "imagePath": "/src/assets/placeholders/pomade-jaune.png"
+        "brandName": "OMEPRAZOLE",
+        "medicationName": "Viatris Conseil 20mg 14 gélules",
+        "description": "Réservé à l’adulte (à partir de 18 ans). La dose recommandée est de 1 gélule par jour. Il est recommandé de prendre OMEPRAZOLE VIATRIS CONSEIL avant le repas : du matin en cas de symptômes prédominants durant la journée ; du soir en cas de symptômes prédominants durant la nuit. Il peut être nécessaire de prendre le traitement pendant 2 ou 3 jours consécutifs pour l’amélioration des symptômes.",
+        "price": 64.80,
+        "imagePath": "/src/assets/placeholders/meds/omeprazole.jpg"
     },
     {
-        "brandName": "Aureomycine",
-        "medicationName": "Pommade ophtalmique",
-        "description": "Aureomycin 1% – Pommade ophtalmique 5g",
-        "price": 9.99,
-        "imagePath": "/src/assets/placeholders/pomade-jaune.png"
+        "brandName": "LOPERAMIDE",
+        "medicationName": "VIATRIS CONSEIL 12 lyophilisats oraux 2 mg",
+        "description": "La posologie initiale est de 2 lyophilisats oraux (4 mg), puis 1 lyophilisat oral supplémentaire (2 mg), à prendre après chaque selle non moulée, au moins une heure après la dose initiale. La posologie usuelle est de 3 à 4 lyophilisats oraux (6 mg – 8 mg) par jour ; la dose maximale journalière ne doit pas dépasser 6 lyophilisats oraux (12 mg).",
+        "price": 34.40,
+        "imagePath": "/src/assets/placeholders/meds/loperamide.jpg"
     },
     {
-        "brandName": "Aureomycine",
-        "medicationName": "Pommade ophtalmique",
-        "description": "Aureomycin 1% – Pommade ophtalmique 5g",
-        "price": 9.99,
-        "imagePath": "/src/assets/placeholders/pomade-jaune.png"
+        "brandName": "HERBESAN",
+        "medicationName": "Miel de Manuka Gorges et Bronches 100 ml",
+        "description": "Le miel de manuka est aujourd'hui consommé pour son activité anticeptique et antibactérienne scientifiquement prouvée. Le miel de manuka 15+ possède une efficacité bactéricide avérée. Il permet de protéger l'organisme contre de nombreux germes pathogènes, de renforcer et préserver une flore intestinale saine.",
+        "price": 100.00,
+        "imagePath": "/src/assets/placeholders/meds/herbesan.jpg"
     },
     {
-        "brandName": "Aureomycine",
-        "medicationName": "Pommade ophtalmique",
-        "description": "Aureomycin 1% – Pommade ophtalmique 5g",
-        "price": 9.99,
-        "imagePath": "/src/assets/placeholders/pomade-jaune.png"
-    },
-    {
-        "brandName": "Aureomycine",
-        "medicationName": "Pommade ophtalmique",
-        "description": "Aureomycin 1% – Pommade ophtalmique 5g",
-        "price": 9.99,
-        "imagePath": "/src/assets/placeholders/pomade-jaune.png"
+        "brandName": "OXOMEMAZINE",
+        "medicationName": "UPSA Toux sèche, irritative flacon de 125 ml",
+        "description": "Ce médicament contient un antihistaminique, l'oxomémazine. Il est préconisé pour calmer les toux sèches et les toux d'irritation chez l'adulte et l'enfant de plus de 2 ans, en particulier lorsqu'elles surviennent le soir ou pendant la nuit.",
+        "price": 40.40,
+        "imagePath": "/src/assets/placeholders/meds/oxomemazine.jpg"
     }
 ]

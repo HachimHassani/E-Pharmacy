@@ -47,21 +47,24 @@
 <script>
     import MedicationCard from './MedicationCard.vue';
     import {defineComponent, createApp} from 'vue'
+import router from '@/router';
 
     export default {
 
         data() {
             return {
                 isLoading: true,
-                medciations: [],
-                medicationCards: []
+                medications: [],
+                page: 0,
+                pageSize: 8
             }
         },
 
         mounted() {
             this.getMedications();
 
-            window.addEventListener('scrollend', () => {
+            window.addEventListener('scroll', () => {
+                if (window.innerHeight + window.scrollY >= window.document.body.offsetHeight)
                 this.addMedicationCards();
             });
         },
@@ -74,28 +77,41 @@
 
             getMedications() {
                 this.isLoading = true;
-                setTimeout(() => {
-                    this.addMedicationCards();
-                    this.isLoading = false;
-                }, 1600);
+                
+                fetch('/src/assets/placeholders/medicaments.json')
+                    .then((response) => response.json())
+                    .then((json) => {
+                        setTimeout(() => {
+                            this.medications = json;
+                            this.addMedicationCards();
+                            this.isLoading = false;
+                        }, 600);
+                    });
+                
             },
 
             addMedicationCards() {
-                for (let i = 0; i < 8; i++) {
+                for (let i = this.page * this.pageSize; i < (this.page + 1) * this.pageSize && i < this.medications.length; i++) {
                     // create card element
                     const card = document.createElement('div');
                     this.$refs.medsGrid.appendChild(card);
 
                     // add card element
-                    createApp(MedicationCard, {
-                        brandName: "Aureomycine",
-                        medicationName: "Pommade ophtalmique",
-                        description: "Aureomycin 1% – Pommade ophtalmique 5g",
-                        price: 9.99,
-                        imagePath: "/src/assets/placeholders/pomade-jaune.png",
-                        showDelai: 50 * i
-                    }).mount(card);
+                    const cardApp = createApp(MedicationCard, {
+                        medicamentId: i,
+                        brandName: this.medications[i].brandName,
+                        medicationName: this.medications[i].medicationName,
+                        description: this.medications[i].description,
+                        price: this.medications[i].price,
+                        imagePath: this.medications[i].imagePath,
+                        showDelai: 50 * (i - this.page * this.pageSize)
+                    });
+
+                    cardApp.use(router);
+                    cardApp.mount(card);
                 }
+
+                this.page++;
             },
 
             clearMedicationCards() {

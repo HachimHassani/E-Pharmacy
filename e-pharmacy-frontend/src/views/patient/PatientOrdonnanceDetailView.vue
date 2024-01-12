@@ -3,26 +3,30 @@ import AddToCartButton from '@/components/AddToCartButton.vue';
 import PageContainer from '@/components/PageContainer.vue';
 import PanierCard from '@/components/PanierCard.vue';
 import PrintOrdonnanceButton from '@/components/PrintOrdonnanceButton.vue'
+import { formatPrice } from '@/scripts/Format';
 import ScreenTypes from '@/scripts/ScreenTypes';
+import Loading from '@/components/Loading.vue';
 </script>
 
 
 <template>
-    <PageContainer class="page-container">
+    <PageContainer>
+
+        <Loading :isLoading="isLoading" />
 
         <!-- Section-->
-        <div class="ordonnance-container">
+        <div ref="ordonnancePage" class="ordonnance-container">
 
             <h1> Votre ordonnance </h1>
 
             <!--Prix donnancee-->
             <div class="split-section" style="font-size: calc(2.4vh + 0.5vw);">
                 <div class="left">
-                    ID xxxxxxxxx
+                    ID {{ ordonnance.ordonnanceId }}
                 </div>
 
                 <div class="right" style="font-weight: 900;">
-                    99,99 MAD
+                    {{ price }}
                 </div>
             </div>
 
@@ -35,7 +39,7 @@ import ScreenTypes from '@/scripts/ScreenTypes';
                 </div>
 
                 <div class="right">
-                    Dr. Tbib
+                    {{ ordonnance.nomMedecin }}
                 </div>
             </div>
 
@@ -45,7 +49,7 @@ import ScreenTypes from '@/scripts/ScreenTypes';
                 </div>
 
                 <div class="right">
-                    Mr. mrid
+                    {{ ordonnance.nomPatient }}
                 </div>
             </div>
 
@@ -55,7 +59,7 @@ import ScreenTypes from '@/scripts/ScreenTypes';
                 </div>
 
                 <div class="right">
-                    XX/XX/XXXX
+                    {{ ordonnance.date }}
                 </div>
             </div>
 
@@ -65,7 +69,7 @@ import ScreenTypes from '@/scripts/ScreenTypes';
                 </div>
 
                 <div class="right">
-                    chi mdina
+                    {{ ordonnance.lieu }}
                 </div>
             </div>
 
@@ -78,18 +82,28 @@ import ScreenTypes from '@/scripts/ScreenTypes';
                 </div>
             </div>
 
-            <PanierCard v-for="i in Array(3)" style="width: 100%;" />
+            <PanierCard v-for="medicament in ordonnance.medicaments" 
+            :title="medicament.brandName"
+            :subTitle="medicament.medicationName"
+            :price="medicament.price"
+            :canDelete="false"
+            style="width: 100%;" />
 
-            <div :class="{
-                'buttons-list': true,
-                'buttons-list-small': isSmall
-                }">
-                <AddToCartButton style="width: 100%;"/>
-                <PrintOrdonnanceButton style="width: 100%;" />
-            </div>
-
+            
         </div>
 
+        <div :class="{
+            'buttons-list': true,
+            'buttons-list-small': isSmall
+            }">
+            <AddToCartButton :item="{
+                'title': `ID ${ordonnance.ordonnanceId}`,
+                'subTitle': ordonnance.nomMedecin,
+                'price': price
+            }" style="width: 100%;"/>
+            <PrintOrdonnanceButton style="width: 100%;" @click="printOrdonnance()"/>
+        </div>
+        
     </PageContainer>
 </template>
 
@@ -136,7 +150,7 @@ import ScreenTypes from '@/scripts/ScreenTypes';
         display: flex;
         flex-direction:row-reverse;
 
-        width: 100%;
+        width: calc(98% - 6vh);
         padding: 2vh;
         gap: 1vh;
     }
@@ -150,7 +164,77 @@ import ScreenTypes from '@/scripts/ScreenTypes';
 
 <script>
     export default {
+        data() {
+            return {
+                isLoading: true,
+                ordonnance: {
+                    ordonnanceId: 0,
+                    nomMedecin: "",
+                    nomPatient: "",
+                    date: "00-00-0000",
+                    lieu: "",
+                    medicaments: []
+                }
+            }
+        },
+
+        mounted() {
+            fetch('/src/assets/placeholders/ordonnances.json')
+                .then((response) => response.json())
+                .then((json) => {
+                    setTimeout(() => {
+                        this.ordonnance = json.filter(o => o.ordonnanceId == this.$route.params.id)[0];
+                        this.isLoading = false;
+                    }, 800);
+                });
+        },
+
+        methods: {
+            printOrdonnance() {
+                let w = window.open();
+                
+                w.document.write(`
+                <html>
+                    <head>
+                        ${document.head.innerHTML} 
+                        <style>
+                            /* Include styles from the current document */
+                            @media print {
+                                /* Define print-specific styles */
+                                body::before {
+                                    content: "Ordonnance ${ this.ordonnance.ordonnanceId }";
+                                    display: block;
+                                    margin-bottom: 10px;
+                                }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                            ${this.$refs.ordonnancePage.innerHTML}
+                        </div>
+                    </body>
+                </html>
+                `);
+
+                w.document.close();
+                w.setTimeout(function () {
+                    w.print();
+                    w.close();
+                }, 1);          
+            }
+        },
+
         computed: {
+            price() {
+                let total = 0;
+
+                this.ordonnance.medicaments.forEach((med) => {
+                    total += med.price;
+                });
+
+                return formatPrice(total);
+            },
             isSmall() {
                 return this.$globalProperties.screenType == ScreenTypes.Mobile;
             }

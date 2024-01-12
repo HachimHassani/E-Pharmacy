@@ -51,7 +51,7 @@ import { RouterLink } from 'vue-router';
 </template>
 
 <style scoped>
-@import "../assets/styles/colors.css";
+    @import "../assets/styles/colors.css";
 
     .card {
         background-color: white;

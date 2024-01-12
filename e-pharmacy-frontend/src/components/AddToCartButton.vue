@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <button class="ajouter main-btn">
+    <button class="ajouter main-btn" @click="onClick()">
         <img src="../assets/icons/cart-white.svg" />
         Ajouter au panier
     </button>
@@ -29,9 +29,18 @@
 <script>
     export default {
         props: {
-            medicamentId: {
-                type: Number,
-                required: true
+            item: {
+                type: Object
+            }
+        },
+
+        methods: {
+            onClick() {
+                let items = this.$cookies.get('panier');
+                items.push(this.item);
+                this.$cookies.set('panier', items);
+            
+                this.$router.push('/patient/panier')
             }
         }
     }

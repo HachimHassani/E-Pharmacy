@@ -10,7 +10,7 @@
         'navbar-scrolled': scrolled,
         'navbar-hidden': !isVisible
     }">
-        <CompanyIcon :hideText="hideCompanyText"></CompanyIcon>
+        <CompanyIcon :hideText="hideCompanyText" @click="$router.push('/patient')"></CompanyIcon>
 
         <div class="navbar-buttons">
 

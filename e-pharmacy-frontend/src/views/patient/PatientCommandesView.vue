@@ -1,17 +1,20 @@
 <script setup>
     import CommandeCard from '@/components/CommandeCard.vue';
+    import Loading from '@/components/Loading.vue';
     import PageContainer from '@/components/PageContainer.vue';
 </script>
 
 <template>
+    <Loading :isLoading="isLoading"/>
+
     <PageContainer>
         <h1> Vos commandes </h1>
 
         <div class="commandes-list">
-            <CommandeCard v-for="i in [0, 1, 2]"
-            :commandeId="11472" 
-            date="00/00/0000"
-            :stade="i"
+            <CommandeCard v-for="commande in commandes"
+            :commandeId="commande.commandeId" 
+            :date="commande.date"
+            :stade="commande.stade"
             />
         </div>
     </PageContainer>
@@ -39,3 +42,24 @@
     }
 </style>
 
+<script>
+    export default {
+        data() {
+            return {
+                isLoading: true,
+                commandes: []
+            }
+        },
+        mounted() {
+            fetch('/src/assets/placeholders/commandes.json')
+                .then((response) => response.json())
+                .then((json) => {
+                    setTimeout(() => {
+                        this.commandes = json;
+                        this.isLoading = false;
+                    }, 700);
+                });
+        }
+        
+    }
+</script>

@@ -18,7 +18,7 @@
             'user-menu': true,
             'user-menu-active': isActive
         }">
-            <h1> User Name </h1>
+            <h1> Ksiks Mohamed Haitam </h1>
 
             <div class="line-separation"/>
 
@@ -40,6 +40,10 @@
         outline: 0px solid var(--main-color);
 
         transition: all 0.1s ease-out;
+    }
+
+    .user-icon:hover {
+        transform: scale(1.17);
     }
 
     .user-icon-active {

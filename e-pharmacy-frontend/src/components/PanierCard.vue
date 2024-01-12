@@ -6,9 +6,9 @@
 
 <template>
 
-    <div :class="{
+    <div  v-if="enabled" :class="{
         'card-container': true,
-        'card-container-disabled': !enabled
+        'card-container-disabled': !currentEnabled
     }">
 
         <div class="card">
@@ -17,7 +17,7 @@
                 <h1> {{ title }} </h1>
                 <h2> {{ subTitle }} </h2>
     
-                <button class="delete-button" @click="onDeleteClick()">
+                <button v-if="canDelete" class="delete-button" @click="onDeleteClick()">
                     <img src="../assets/icons/trash.svg" />
                     <div> Supprimer </div>
                 </button>
@@ -41,6 +41,10 @@
 <script>
     export default {
         props: {
+            canDelete: {
+                type: Boolean,
+                default: true
+            },
             cardType: {
                 type: String,
                 default: PanierCardTypes.Ordonnance
@@ -56,19 +60,33 @@
             subTitle: {
                 type: String,
                 required: true
+            },
+            enabled: {
+                type: Boolean,
+                default: true
             }
 
         },
 
         data() {
             return {
-                enabled: true
+                currentEnabled: true,
             }
+        },
+
+        mounted() {
+            this.currentEnabled = this.enabled;
         },
 
         methods: {
             onDeleteClick() {
-                this.enabled = false;
+                if (!this.currentEnabled) return;
+
+                this.currentEnabled = false;
+                // wait for animation to end
+                setTimeout(() => {
+                    this.$emit("onDelete");
+                }, 1200);
             }
         },
 

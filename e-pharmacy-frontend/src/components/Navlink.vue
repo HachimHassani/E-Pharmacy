@@ -61,6 +61,12 @@ import { RouterLink } from 'vue-router';
         color: black;
         text-decoration: none;
         gap: 8px;
+
+        transition: all 0.1s ease-out;
+    }
+
+    .router-link:hover {
+        transform: scale(1.17);
     }
 
     .router-link img {

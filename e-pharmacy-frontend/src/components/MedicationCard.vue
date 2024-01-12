@@ -5,7 +5,7 @@
 <template>
     
 
-    <div :class="{
+    <div @click="onClick()" :class="{
         'med-card': true,
         'med-card-show': isVisible
     }" >
@@ -13,13 +13,13 @@
         <img v-show="!isLoading" class="med-icon" :src="imagePath" @load="imageLoadingDone"/>
 
         <h1> {{ brandName }} </h1>
-        <h2> {{ medicationName }} </h2>
+        <h2> {{ limitedName }} </h2>
 
         <div class="description"> 
-            {{ description }}
+            {{ limitedDescription }}...
         </div>
 
-        <div class="price">{{ formatedPrice }} MAD</div>
+        <div class="price"> {{ formatedPrice }} </div>
     </div>
 </template>
 
@@ -33,6 +33,8 @@
         border: 1px solid var(--stroke-color);
         margin: 0px;
         padding: 24px;
+
+        overflow: hidden;
 
         display: flex;
         flex-direction: column;
@@ -130,6 +132,10 @@
 <script>
     export default {
         props: {
+            medicamentId: {
+                type: Number,
+                required: true
+            },
             imagePath: {
                 type: String, 
                 required: true
@@ -178,14 +184,25 @@
             imageLoadingDone() {
                 setTimeout(() => {
                     this.isLoading = false;
-                }, 1000);
+                }, Math.random() * 500);
+            },
+            onClick() {
+                this.$router.push(`/patient/medicament/${this.medicamentId}`);
             }
         },
         
         computed: {
             formatedPrice() {
                 return formatPrice(this.price);
+            },
+            limitedDescription() {
+                return this.description.slice(0, Math.min(20, this.description.length));
+            },
+            limitedName() {
+                return this.medicationName.charAt(0).toUpperCase() +  this.medicationName.toLowerCase().slice(1, Math.min(19, this.medicationName.length)) + 
+                (this.medicationName.length > 20? '...': '');
             }
+
         }
     }
 </script>

@@ -1,12 +1,16 @@
 <script setup>
     import PageContainer from "../../components/PageContainer.vue";
     import MedicationList from "../../components/MedicationList.vue";
-import MedicationCard from "@/components/MedicationCard.vue";
-import OrdonnanceCard from "@/components/OrdonnanceCard.vue";
-import CommandeCard from "@/components/CommandeCard.vue";
+    import MedicationCard from "@/components/MedicationCard.vue";
+    import OrdonnanceCard from "@/components/OrdonnanceCard.vue";
+    import CommandeCard from "@/components/CommandeCard.vue";
+    import Loading from "@/components/Loading.vue";
+    import { getOrdonnancePrice } from "@/scripts/Ordonnance";
 </script>
 
 <template>
+    <Loading :isLoading="isLoading"/>
+
     <PageContainer class="page-container">
         <h1> Bienvenue dans My Pharmacy </h1>
 
@@ -21,11 +25,12 @@ import CommandeCard from "@/components/CommandeCard.vue";
                 
                 <div class="meds-grid">
                 
-                    <MedicationCard v-for="i in [0, 1, 2, 3]" brandName="Aureomycine"
-                    medicationName="Pommade ophtalmique"
-                    description="Aureomycin 1% – Pommade ophtalmique 5g"
-                    :price="9.99"
-                    imagePath="/src/assets/placeholders/pomade-jaune.png"/>
+                    <MedicationCard v-for="medicament in medicaments"
+                    :brandName="medicament.brandName"
+                    :medicationName="medicament.medicationName"
+                    :description="medicament.description"
+                    :price="medicament.price"
+                    :imagePath="medicament.imagePath"/>
                 
                 </div>
             </section>
@@ -40,7 +45,12 @@ import CommandeCard from "@/components/CommandeCard.vue";
                 </div>
             
                 <div class="list">
-                    <OrdonnanceCard v-for="i in [0, 1, 2]" />
+                    <OrdonnanceCard v-for="ordonnance in ordonnances" 
+                    :ordonnanceId="ordonnance.ordonnanceId"
+                    :nomMedecin="ordonnance.nomMedecin"
+                    :date="ordonnance.date"
+                    :lieu="ordonnance.lieu"
+                    :price="getOrdonnancePrice(ordonnance)"/>
                 </div>
             </section>
 
@@ -54,10 +64,10 @@ import CommandeCard from "@/components/CommandeCard.vue";
                 </div>
         
                 <div class="list">
-                    <CommandeCard v-for="i in [0, 1, 2]"
-                    :commandeId="15332"
-                    date="XX-XX-XXXX"
-                    :stade="i"/>
+                    <CommandeCard v-for="commande in commandes"
+                    :commandeId="commande.commandeId"
+                    :date="commande.date"
+                    :stade="commande.stade"/>
                 </div>
             </section>
         </div>
@@ -122,3 +132,41 @@ import CommandeCard from "@/components/CommandeCard.vue";
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
 </style>
+
+<script>
+    export default {
+        data() {
+            return {
+                isLoading: true,
+                medicaments: [],
+                ordonnances: [],
+                commandes: []
+
+            }
+        },
+
+        mounted() {
+            this.fetchAll()
+                .then(() => {
+                    setTimeout(() => {
+                        this.isLoading = false;
+                    }, Math.random() * 1000);
+                })
+        },
+        methods: {
+            async fetchAll() {
+                // fetch medicaments
+                this.medicaments = await (await fetch('/src/assets/placeholders/medicaments.json')).json();
+                this.medicaments = this.medicaments.slice(0, 4);
+
+                // fetch ordonnances
+                this.ordonnances = await (await fetch('/src/assets/placeholders/ordonnances.json')).json();
+                this.ordonnances = this.ordonnances.slice(0, 3);
+
+                // fetch commandes
+                this.commandes = await (await fetch('/src/assets/placeholders/commandes.json')).json();
+                this.commandes = this.commandes.slice(0, 3);
+            }
+        }
+    }
+</script>
