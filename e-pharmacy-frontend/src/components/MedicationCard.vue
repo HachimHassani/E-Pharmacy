@@ -9,7 +9,7 @@
         'med-card': true,
         'med-card-show': isVisible
     }" >
-        <img v-if="isLoading" class="med-icon-loading" src="@/assets/icons/loading.svg"/>
+        <img v-if="isLoading" class="med-icon-loading" src="/icons/loading.svg"/>
         <img v-show="!isLoading" class="med-icon" :src="imagePath" @load="imageLoadingDone"/>
 
         <h1> {{ brandName }} </h1>

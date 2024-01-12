@@ -5,7 +5,7 @@
     }">
 
         <div class="loading-icon-container">
-            <img src="@/assets/icons/loading-white.svg"/>
+            <img src="/icons/loading-white.svg"/>
         </div>
     </div> 
 </template>

@@ -51,7 +51,7 @@
             }
         },
         mounted() {
-            fetch('/src/assets/placeholders/commandes.json')
+            fetch('/placeholders/commandes.json')
                 .then((response) => response.json())
                 .then((json) => {
                     setTimeout(() => {

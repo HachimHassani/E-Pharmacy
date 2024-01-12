@@ -30,7 +30,7 @@
     .search-input {
         flex: 0.8;
         padding-left: 42px;
-        background-image: url("../assets/icons/search.svg");
+        background-image: url("/icons/search.svg");
         background-size: 36px;
         background-position-y: center;
         background-position-x: 4px;

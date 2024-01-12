@@ -78,7 +78,7 @@ import router from '@/router';
             getMedications() {
                 this.isLoading = true;
                 
-                fetch('/src/assets/placeholders/medicaments.json')
+                fetch('/placeholders/medicaments.json')
                     .then((response) => response.json())
                     .then((json) => {
                         setTimeout(() => {

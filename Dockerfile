@@ -18,8 +18,8 @@ COPY e-pharmacy-frontend/dist /usr/share/nginx/html
 #RUN apt-get -y install postgresql
 
 #get run file
-#COPY run.sh .
-#RUN chmod +x run.sh
+COPY run.sh .
+RUN chmod +x run.sh
 
 #run api
 #ARG JAR_FILE=e-pharmacy-backend/target/*.jar

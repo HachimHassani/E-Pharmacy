@@ -18,7 +18,7 @@
                 <h2> {{ subTitle }} </h2>
     
                 <button v-if="canDelete" class="delete-button" @click="onDeleteClick()">
-                    <img src="../assets/icons/trash.svg" />
+                    <img src="/icons/trash.svg" />
                     <div> Supprimer </div>
                 </button>
             </div>

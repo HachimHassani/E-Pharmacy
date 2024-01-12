@@ -8,7 +8,7 @@
         'user-icon': true,
         'user-icon-active': isActive
     }" 
-    src="@/assets/icons/profil.svg" 
+    src="/icons/profil.svg" 
     draggable="false"
     @click="onIconClick()" />
 
@@ -22,9 +22,9 @@
 
             <div class="line-separation"/>
 
-            <Navlink class="navlink" iconPath="../assets/icons/commands.svg" to="/patient/commandes"> Commandes </Navlink>
+            <Navlink class="navlink" iconPath="/icons/commands.svg" to="/patient/commandes"> Commandes </Navlink>
 
-            <Navlink class="navlink logout" iconPath="../assets/icons/logout.svg" to=""> Se Deconnecter </Navlink>
+            <Navlink class="navlink logout" iconPath="/icons/logout.svg" to=""> Se Deconnecter </Navlink>
         </div>
     </div>
 </template>

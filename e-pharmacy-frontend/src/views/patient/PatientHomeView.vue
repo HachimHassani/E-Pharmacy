@@ -156,15 +156,15 @@
         methods: {
             async fetchAll() {
                 // fetch medicaments
-                this.medicaments = await (await fetch('/src/assets/placeholders/medicaments.json')).json();
+                this.medicaments = await (await fetch('/placeholders/medicaments.json')).json();
                 this.medicaments = this.medicaments.slice(0, 4);
 
                 // fetch ordonnances
-                this.ordonnances = await (await fetch('/src/assets/placeholders/ordonnances.json')).json();
+                this.ordonnances = await (await fetch('/placeholders/ordonnances.json')).json();
                 this.ordonnances = this.ordonnances.slice(0, 3);
 
                 // fetch commandes
-                this.commandes = await (await fetch('/src/assets/placeholders/commandes.json')).json();
+                this.commandes = await (await fetch('/placeholders/commandes.json')).json();
                 this.commandes = this.commandes.slice(0, 3);
             }
         }
