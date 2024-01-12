@@ -28,7 +28,7 @@ jobs:
               working-directory: ./e-pharmacy-frontend
 
             # upload debug
-            - uses: "marvinpinto/action-automatic-releases@latest"
+            - uses: "actions/upload-artifact@v2"
               with:
                 repo_token: "${{ secrets.GITHUB_TOKEN }}"
                 automatic_release_tag: "latest"
